@@ -1,17 +1,22 @@
 import { ThemeProvider } from "@react-navigation/native"
+import { QueryClientProvider } from "@tanstack/react-query"
 import { Tabs } from "expo-router"
 import { StatusBar } from "expo-status-bar"
 import "react-native-reanimated"
 
-import { AppTheme } from "../constants/theme"
+import React from "react"
+import tmdbClient from "../src/api/client"
 import HomeSVG from "../src/components/Home"
 import SaveSVG from "../src/components/Save"
 import SearchSVG from "../src/components/Search"
+import { AppTheme } from "../src/constants/theme"
 
 export default function RootLayout() {
   return (
     <ThemeProvider value={AppTheme}>
-      <NavLayout />
+      <QueryClientProvider client={tmdbClient}>
+        <NavLayout />
+      </QueryClientProvider>
       <StatusBar style="light" />
     </ThemeProvider>
   )
