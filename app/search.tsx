@@ -14,7 +14,8 @@ const SearchScreen = () => {
   const [search, setSearch] = useState<string>((query as string) || "")
   const { data, isLoading, error } = useSearchMovies(search)
 
-  const renderItem: ListRenderItem<MovieDetails> = useCallback(({ item }) => {
+  const renderItem: ListRenderItem<MovieDetails | undefined> = useCallback(({ item }) => {
+    if (!item) return null
     return <Card item={item} />
   }, [])
 
@@ -24,10 +25,10 @@ const SearchScreen = () => {
   }, [query])
 
   return (
-    <FlatList<MovieDetails>
+    <FlatList<MovieDetails | undefined>
       data={data?.results || []}
       renderItem={renderItem}
-      keyExtractor={(item) => item.id.toString()}
+      keyExtractor={(item, index) => item?.id?.toString() ?? index.toString()}
       contentContainerStyle={{ paddingTop }}
       ListHeaderComponent={<SearchInput defaultText={query as string} onSearch={setSearch} />}
       ListEmptyComponent={() => {

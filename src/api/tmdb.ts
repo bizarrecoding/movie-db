@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Movie, MovieDetails, MovieVideo, Pagination } from './types';
+import { GenreList, Movie, MovieDetails, MovieVideo, Pagination } from './types';
 
 
 const headers = {
@@ -52,11 +52,15 @@ export const movieVideoQuery = async (id: number) => {
 }
 
 export const searchMovieQuery = async (text: string) => {
-  const { data } = await tmdbApi.get<Pagination<MovieDetails>>(`/search/movie`,{
+  const { data } = await tmdbApi.get<Pagination<Movie>>(`/search/movie`,{
     params: {
-      query: text
+      query: text,
     }
-  });
+  })
   return data;
 }
 
+export const getGenresQuery = async () => {
+  const { data } = await tmdbApi.get<GenreList>("/genres/movie/list");
+  return data.genres;
+}

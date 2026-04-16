@@ -1,14 +1,14 @@
 import { router } from "expo-router"
 import React from "react"
 import { StyleSheet, TouchableNativeFeedback, View } from "react-native"
-import { Genre, MovieDetails } from "../../api/types"
+import { Movie, MovieDetails } from "../../api/types"
 import { useThemeColor } from "../../hooks/use-theme-color"
 import ImageIcon from "../ImageIcon"
 import { ThemedText } from "../ThemedText"
 import Poster from "./Poster"
 
 type CardProps = {
-  item: MovieDetails
+  item: MovieDetails | Movie
 }
 
 const Card: React.FC<CardProps> = ({ item }) => {
@@ -26,28 +26,37 @@ const Card: React.FC<CardProps> = ({ item }) => {
             <ImageIcon name="star" size={16} />
             <ThemedText style={{ color }}>{item.vote_average.toFixed(2)}</ThemedText>
           </View>
-          <View style={styles.infoRow}>
-            <ImageIcon name="ticket" size={16} />
-            <ThemedText>{getMainGenre(item.genres)}</ThemedText>
-          </View>
+          {(item as MovieDetails)?.genres?.length ? (
+            <View style={styles.infoRow}>
+              <ImageIcon name="ticket" size={16} />
+              <ThemedText>{getMainGenre(item)}</ThemedText>
+            </View>
+          ) : null}
           <View style={styles.infoRow}>
             <ImageIcon name="calendar" size={16} />
             <ThemedText>{getReleaseYear(item.release_date)}</ThemedText>
           </View>
-          <View style={styles.infoRow}>
-            <ImageIcon name="clock" size={16} />
-            <ThemedText>{item.runtime ?? 0} min</ThemedText>
-          </View>
+          {(item as MovieDetails).runtime ? (
+            <View style={styles.infoRow}>
+              <ImageIcon name="clock" size={16} />
+              <ThemedText>{(item as MovieDetails).runtime ?? 0} min</ThemedText>
+            </View>
+          ) : null}
         </View>
       </View>
     </TouchableNativeFeedback>
   )
 }
 
-const getMainGenre = (genres: Genre[]) => {
+const getMainGenre = (movie: MovieDetails | Movie) => {
+  const genres = (movie as MovieDetails)?.genres ?? []
   const [main] = genres ?? []
-  if (!main) return ""
-  return main.name
+  if (main) return main.name
+  if (movie.genre_ids) {
+    const [first] = movie.genre_ids
+    return [first]
+  }
+  return ""
 }
 
 const getReleaseYear = (date: string) => {

@@ -43,3 +43,6 @@ export type MovieVideo = {
   official: boolean
   published_at: string
 }
+export type GenreList = {
+  genres: Genre[]
+}
