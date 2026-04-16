@@ -1,5 +1,5 @@
 import React from "react"
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native"
+import { Image, StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native"
 import { useThemeColor } from "../../hooks/use-theme-color"
 import { ThemedText } from "../ThemedText"
 
@@ -9,15 +9,16 @@ type RankedImageProps = {
   rank?: number
   width?: number
   onPress?: () => void
+  style?: StyleProp<ViewStyle>
 }
 
 const MEDIA_BASE_URL = "https://media.themoviedb.org/t/p/w440_and_h660_face"
 
-const Poster: React.FC<RankedImageProps> = ({ id, imageUrl, width = 100, rank, onPress }) => {
+const Poster: React.FC<RankedImageProps> = ({ id, imageUrl, width = 100, rank, onPress, style }) => {
   const color = useThemeColor({}, "background")
   const textShadowColor = useThemeColor({}, "tint")
   return (
-    <TouchableOpacity style={[styles.container, { width }]} onPress={onPress}>
+    <TouchableOpacity style={[styles.container, { width }, style]} onPress={onPress}>
       <Image source={{ uri: MEDIA_BASE_URL + imageUrl }} style={styles.image} />
       {rank ? (
         <View style={styles.rankContainer}>
@@ -32,8 +33,6 @@ const Poster: React.FC<RankedImageProps> = ({ id, imageUrl, width = 100, rank, o
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 12,
-    paddingHorizontal: 12,
     aspectRatio: 2 / 3,
   },
   image: {
@@ -43,7 +42,7 @@ const styles = StyleSheet.create({
   },
   rankContainer: {
     position: "absolute",
-    bottom: -20,
+    bottom: -2,
     left: 0,
     borderRadius: 15,
     justifyContent: "center",
@@ -54,7 +53,7 @@ const styles = StyleSheet.create({
     lineHeight: 96,
     elevation: 2,
     textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 13,
+    textShadowRadius: 3,
   },
 })
 

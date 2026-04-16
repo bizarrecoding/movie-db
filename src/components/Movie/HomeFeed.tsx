@@ -48,7 +48,7 @@ export const HomeFeed = () => {
         <ThemedText type="subtitle" style={styles.header}>
           What do you want to watch?
         </ThemedText>
-        <SearchInput onSearch={() => {}} />
+        <SearchInput />
         <PopularGallery />
       </>
     ),
@@ -57,7 +57,15 @@ export const HomeFeed = () => {
   const renderItem: ListRenderItem<Movie> = useCallback(
     ({ item }) => {
       const goToDetails = () => router.push(`/details/${item.id}`)
-      return <Poster id={item.id} imageUrl={item.poster_path} width={width / 3} onPress={goToDetails} />
+      return (
+        <Poster
+          id={item.id}
+          imageUrl={item.poster_path}
+          width={width / 3}
+          onPress={goToDetails}
+          style={styles.poster}
+        />
+      )
     },
     [width],
   )
@@ -98,5 +106,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600",
     marginHorizontal: 24,
+  },
+  poster: {
+    paddingHorizontal: 12,
+    marginBottom: 12,
   },
 })

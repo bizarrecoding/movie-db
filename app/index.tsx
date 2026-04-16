@@ -5,12 +5,7 @@ import { HomeFeed } from "../src/components/Movie/HomeFeed"
 export default function Index() {
   const { top } = useSafeAreaInsets()
   return (
-    <View
-      style={{
-        flex: 1,
-        paddingTop: top,
-      }}
-    >
+    <View style={{ flex: 1, paddingTop: top }}>
       <HomeFeed />
     </View>
   )

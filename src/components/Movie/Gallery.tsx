@@ -1,6 +1,6 @@
 import { router } from "expo-router"
 import React, { useCallback } from "react"
-import { FlatList, ListRenderItem, useWindowDimensions } from "react-native"
+import { FlatList, ListRenderItem, StyleSheet } from "react-native"
 import { Movie } from "../../api/types"
 import Poster from "./Poster"
 
@@ -12,18 +12,24 @@ type GalleryProps = {
 }
 
 export const Gallery: React.FC<GalleryProps> = ({ data, horizontal = false, numColumns, ListHeader }) => {
-  const { width } = useWindowDimensions()
-  const maxHeight = horizontal ? 240 : undefined
+  const maxHeight = horizontal ? 260 : undefined
   const renderItem: ListRenderItem<Movie> = useCallback(
     ({ item, index }) => {
       const goToDetails = () => router.push(`/details/${item.id}`)
       if (horizontal)
         return (
-          <Poster id={item.id} imageUrl={item.poster_path} rank={index + 1} width={width / 2} onPress={goToDetails} />
+          <Poster
+            id={item.id}
+            imageUrl={item.poster_path}
+            rank={index + 1}
+            width={180}
+            onPress={goToDetails}
+            style={styles.poster}
+          />
         )
-      return <Poster id={item.id} imageUrl={item.poster_path} width={width / 3} onPress={goToDetails} />
+      return <Poster id={item.id} imageUrl={item.poster_path} width={120} onPress={goToDetails} style={styles.poster} />
     },
-    [horizontal, width],
+    [horizontal],
   )
 
   return (
@@ -37,3 +43,10 @@ export const Gallery: React.FC<GalleryProps> = ({ data, horizontal = false, numC
     />
   )
 }
+
+const styles = StyleSheet.create({
+  poster: {
+    paddingHorizontal: 12,
+    marginBottom: 12,
+  },
+})
