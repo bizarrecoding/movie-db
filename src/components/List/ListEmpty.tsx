@@ -6,9 +6,8 @@ import { ThemedText } from "../ThemedText"
 export const ListEmptyComponent = () => (
   <View style={styles.container}>
     <NoResults style={styles.icon} />
-    <ThemedText type="subtitle" style={{ textAlign: "center" }}>
-      We Are Sorry, We Can{"\n"}Not Find The Movies :(
-    </ThemedText>
+    <ThemedText style={styles.title}>We Are Sorry, We Can{"\n"}Not Find The Movies :(</ThemedText>
+    <ThemedText style={styles.subtitle}>Find you movie by Type title, categories, years,</ThemedText>
   </View>
 )
 
@@ -26,23 +25,25 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     minHeight: 600,
+    width: "50%",
+    margin: "auto",
   },
   icon: {
     paddingVertical: 24,
     paddingHorizontal: 8,
   },
   title: {
-    fontSize: 20,
-    lineHeight: 32,
-    fontWeight: "600",
     textAlign: "center",
-    width: "70%",
+    fontSize: 16,
+    fontWeight: 600,
+    lineHeight: 24,
     marginBottom: 8,
   },
   subtitle: {
-    textAlign: "center",
-    width: "70%",
     color: "#687076",
-    lineHeight: 19,
+    textAlign: "center",
+    fontSize: 12,
+    fontWeight: 600,
+    lineHeight: 18,
   },
 })
