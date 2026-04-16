@@ -45,30 +45,25 @@ export const HomeFeed = () => {
   const renderHeader = useCallback(
     () => (
       <>
-        <ThemedText type="subtitle" style={styles.header}>
-          What do you want to watch?
-        </ThemedText>
+        <ThemedText style={styles.header}>What do you want to watch?</ThemedText>
         <SearchInput />
         <PopularGallery />
       </>
     ),
     [],
   )
-  const renderItem: ListRenderItem<Movie> = useCallback(
-    ({ item }) => {
-      const goToDetails = () => router.push(`/details/${item.id}`)
-      return (
-        <Poster
-          id={item.id}
-          imageUrl={item.poster_path}
-          width={width / 3}
-          onPress={goToDetails}
-          style={styles.poster}
-        />
-      )
-    },
-    [width],
-  )
+  const renderItem: ListRenderItem<Movie> = useCallback(({ item }) => {
+    const goToDetails = () => router.push(`/details/${item.id}`)
+    return (
+      <Poster
+        id={item.id}
+        imageUrl={item.poster_path}
+        onPress={goToDetails}
+        style={styles.poster}
+        aspectRatio={2 / 3}
+      />
+    )
+  }, [])
 
   const moviesByCategory: Record<HomeFeedTabs, Movie[]> = {
     now_playing: data?.results || [],
@@ -95,6 +90,7 @@ export const HomeFeed = () => {
         }
         return <ListEmptyComponent />
       }}
+      contentContainerStyle={{ rowGap: 18 }}
       renderItem={renderItem}
       keyExtractor={(item) => item.id.toString()}
     />
@@ -108,7 +104,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 24,
   },
   poster: {
-    paddingHorizontal: 12,
-    marginBottom: 12,
+    margin: "auto",
   },
 })

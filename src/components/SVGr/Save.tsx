@@ -3,7 +3,7 @@ import Svg, { Path } from "react-native-svg"
 import { SvgrProps } from "../types"
 
 const SaveSvg = (props: SvgrProps) => {
-  const { size = 22, color = "#67686D", ...rest } = props
+  const { size = 24, color = "#67686D", ...rest } = props
   return (
     <Svg width={size} height={size} fill="none" {...rest}>
       <Path

@@ -12,7 +12,7 @@ type GalleryProps = {
 }
 
 export const Gallery: React.FC<GalleryProps> = ({ data, horizontal = false, numColumns, ListHeader }) => {
-  const maxHeight = horizontal ? 260 : undefined
+  const maxHeight = horizontal ? 220 : undefined
   const renderItem: ListRenderItem<Movie> = useCallback(
     ({ item, index }) => {
       const goToDetails = () => router.push(`/details/${item.id}`)
@@ -22,12 +22,21 @@ export const Gallery: React.FC<GalleryProps> = ({ data, horizontal = false, numC
             id={item.id}
             imageUrl={item.poster_path}
             rank={index + 1}
-            width={180}
+            width={144}
             onPress={goToDetails}
             style={styles.poster}
+            aspectRatio={2 / 3}
           />
         )
-      return <Poster id={item.id} imageUrl={item.poster_path} width={120} onPress={goToDetails} style={styles.poster} />
+      return (
+        <Poster
+          id={item.id}
+          imageUrl={item.poster_path}
+          onPress={goToDetails}
+          style={styles.poster}
+          aspectRatio={2 / 3}
+        />
+      )
     },
     [horizontal],
   )
@@ -38,6 +47,10 @@ export const Gallery: React.FC<GalleryProps> = ({ data, horizontal = false, numC
       numColumns={numColumns}
       data={data || []}
       renderItem={renderItem}
+      contentContainerStyle={{
+        paddingHorizontal: horizontal ? 24 : 0,
+        gap: 14,
+      }}
       style={{ maxHeight, minHeight: maxHeight }}
       keyExtractor={(item) => item.id.toString()}
     />

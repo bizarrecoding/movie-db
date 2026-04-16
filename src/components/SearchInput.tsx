@@ -54,9 +54,9 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
+    height: 42,
     borderRadius: 16,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
+    paddingHorizontal: 25,
     marginHorizontal: 24,
     marginVertical: 18,
     elevation: 1,

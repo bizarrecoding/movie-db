@@ -36,7 +36,7 @@ const NavLayout = () => {
         tabBarLabel(props) {
           const { focused, children } = props
           const color = focused ? active : inactive
-          return <ThemedText style={{ color }}>{children}</ThemedText>
+          return <ThemedText style={{ color, fontSize: 14 }}>{children}</ThemedText>
         },
       }}
     >

@@ -72,8 +72,6 @@ const SlidingTabs = <T extends string>({ tabs, activeTab, onTabChange }: Sliding
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    marginTop: 12,
-    marginBottom: 18,
   },
   tabsContainer: {
     flexDirection: "row",
@@ -85,7 +83,8 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   tabText: {
-    fontSize: 16,
+    fontSize: 14,
+    lineHeight: 21,
   },
   activeTabText: {
     fontWeight: "600",
