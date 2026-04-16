@@ -1,6 +1,6 @@
 import * as React from "react"
 import Svg, { Ellipse, Path } from "react-native-svg"
-import { SvgrProps } from "./types"
+import { SvgrProps } from "../types"
 
 const SearchSvg = (props: SvgrProps) => {
   const { size = 22, color = "#67686D", ...rest } = props

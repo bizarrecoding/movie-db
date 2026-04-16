@@ -6,9 +6,9 @@ import "react-native-reanimated"
 
 import React from "react"
 import tmdbClient from "../src/api/client"
-import HomeSVG from "../src/components/Home"
-import SaveSVG from "../src/components/Save"
-import SearchSVG from "../src/components/Search"
+import HomeSVG from "../src/components/SVGr/Home"
+import SaveSVG from "../src/components/SVGr/Save"
+import SearchSVG from "../src/components/SVGr/Search"
 import { AppTheme } from "../src/constants/theme"
 
 export default function RootLayout() {
