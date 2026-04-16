@@ -2,11 +2,11 @@ import { useHeaderHeight } from "@react-navigation/elements"
 import { useLocalSearchParams } from "expo-router"
 import React, { useCallback, useEffect, useState } from "react"
 import { ActivityIndicator, FlatList, ListRenderItem, StyleSheet } from "react-native"
-import { MovieDetails } from "../src/api/types"
-import { ListEmptyComponent } from "../src/components/List/ListEmpty"
-import Card from "../src/components/Movie/Card"
-import SearchInput from "../src/components/SearchInput"
-import { useSearchMovies } from "../src/hooks/use-search-movies"
+import { MovieDetails } from "../../src/api/types"
+import { ListEmptyComponent } from "../../src/components/List/ListEmpty"
+import Card from "../../src/components/Movie/Card"
+import SearchInput from "../../src/components/SearchInput"
+import { useSearchMovies } from "../../src/hooks/use-search-movies"
 
 const SearchScreen = () => {
   const paddingTop = useHeaderHeight()

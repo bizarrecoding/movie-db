@@ -31,10 +31,6 @@ const DetailsScreen = () => {
       headerRight: () => (
         <ToggleIcon tintColor="#FFF" style={{ marginHorizontal: 24 }} value={saved} setValue={onToggleSaved} />
       ),
-      headerTitleStyle: {
-        fontSize: 18,
-        fontWeight: "600",
-      },
     })
   }, [data?.title, saved, navigation])
 
