@@ -1,52 +1,37 @@
 import { router } from "expo-router"
-import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from "react"
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native"
 import { useThemeColor } from "../hooks/use-theme-color"
-import SearchSvg from "./Search"
+import SearchSvg from "./SVGr/Search"
 
 type SearchInputProps = {
   defaultText?: string
-  onSearch: Dispatch<SetStateAction<string>> | ((value: string) => void)
+  onSearch?: Dispatch<SetStateAction<string>> | ((value: string) => void)
   debounceTime?: number
 }
 
 const SearchInput: React.FC<SearchInputProps> = ({ onSearch, defaultText, debounceTime = 500 }) => {
   const [searchText, setSearchText] = useState(defaultText ?? "")
   const [isFocused, setIsFocused] = useState(false)
-  const debounceRef = useRef<NodeJS.Timeout | null>(null)
   const backgroundColor = useThemeColor({ light: "#3A3F47", dark: "#3A3F47" }, "icon")
   const borderColor = useThemeColor({ light: "#67686D", dark: "#67686D" }, "icon")
 
-  useEffect(() => {
-    // Clear previous timeout
-    if (debounceRef.current) {
-      clearTimeout(debounceRef.current)
-    }
-
-    // Set new timeout
-    debounceRef.current = setTimeout(() => {
-      onSearch(searchText)
-    }, debounceTime)
-
-    // Cleanup function
-    return () => {
-      if (debounceRef.current) {
-        clearTimeout(debounceRef.current)
-      }
-    }
-  }, [searchText, onSearch, debounceTime])
-
   const handleSubmit = () => {
-    router.push(`/search?query=${encodeURIComponent(searchText)}`)
-    setSearchText("")
-    onSearch("")
+    if (onSearch) return onSearch(searchText)
+    return router.push(`/search?query=${encodeURIComponent(searchText)}`)
   }
+
+  useEffect(() => {
+    // updates input text state since defaultValue only happens once
+    if (defaultText) setSearchText(defaultText)
+  }, [defaultText])
 
   return (
     <View
       style={[styles.container, { backgroundColor, borderColor }, isFocused && { elevation: 3, shadowOpacity: 0.2 }]}
     >
       <TextInput
+        key={defaultText}
         style={styles.input}
         placeholder="Search..."
         placeholderTextColor="#888"
