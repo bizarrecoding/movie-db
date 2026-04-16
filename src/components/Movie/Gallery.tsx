@@ -1,3 +1,4 @@
+import { router } from "expo-router"
 import React, { useCallback } from "react"
 import { FlatList, ListRenderItem, useWindowDimensions } from "react-native"
 import { Movie } from "../../api/types"
@@ -15,8 +16,12 @@ export const Gallery: React.FC<GalleryProps> = ({ data, horizontal = false, numC
   const maxHeight = horizontal ? 240 : undefined
   const renderItem: ListRenderItem<Movie> = useCallback(
     ({ item, index }) => {
-      if (horizontal) return <Poster imageUrl={item.poster_path} rank={index + 1} width={width / 2} />
-      return <Poster imageUrl={item.poster_path} width={width / 3} />
+      const goToDetails = () => router.push(`/details/${item.id}`)
+      if (horizontal)
+        return (
+          <Poster id={item.id} imageUrl={item.poster_path} rank={index + 1} width={width / 2} onPress={goToDetails} />
+        )
+      return <Poster id={item.id} imageUrl={item.poster_path} width={width / 3} onPress={goToDetails} />
     },
     [horizontal, width],
   )

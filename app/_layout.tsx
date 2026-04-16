@@ -47,7 +47,13 @@ const NavLayout = () => {
           tabBarIcon: ({ color, size }) => <SaveSVG color={color} size={size} />,
         }}
       />
-      <Tabs.Screen name="details/[id]" options={{ href: null }} />
+      <Tabs.Screen
+        name="details/[id]"
+        options={{
+          href: null,
+          headerTitle: "",
+        }}
+      />
     </Tabs>
   )
 }

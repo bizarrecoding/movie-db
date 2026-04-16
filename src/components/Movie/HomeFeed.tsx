@@ -1,3 +1,4 @@
+import { router } from "expo-router"
 import { useCallback, useState } from "react"
 import { FlatList, ListRenderItem, StyleSheet, useWindowDimensions } from "react-native"
 import { Movie } from "../../api/types"
@@ -54,7 +55,10 @@ export const HomeFeed = () => {
     [],
   )
   const renderItem: ListRenderItem<Movie> = useCallback(
-    ({ item }) => <Poster imageUrl={item.poster_path} width={width / 3} />,
+    ({ item }) => {
+      const goToDetails = () => router.push(`/details/${item.id}`)
+      return <Poster id={item.id} imageUrl={item.poster_path} width={width / 3} onPress={goToDetails} />
+    },
     [width],
   )
 

@@ -11,7 +11,6 @@ const SearchScreen = () => {
 
   useEffect(() => {
     setSearch((query as string) || "")
-    console.log("🚀 ~ SearchScreen ~ setSearch:", query)
   }, [query])
 
   return (

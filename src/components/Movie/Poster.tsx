@@ -4,18 +4,20 @@ import { useThemeColor } from "../../hooks/use-theme-color"
 import { ThemedText } from "../ThemedText"
 
 type RankedImageProps = {
+  id: number
   imageUrl: string
   rank?: number
   width?: number
+  onPress?: () => void
 }
 
 const MEDIA_BASE_URL = "https://media.themoviedb.org/t/p/w440_and_h660_face"
 
-const Poster: React.FC<RankedImageProps> = ({ imageUrl, width = 100, rank }) => {
+const Poster: React.FC<RankedImageProps> = ({ id, imageUrl, width = 100, rank, onPress }) => {
   const color = useThemeColor({}, "background")
   const textShadowColor = useThemeColor({}, "tint")
   return (
-    <TouchableOpacity style={[styles.container, { width }]}>
+    <TouchableOpacity style={[styles.container, { width }]} onPress={onPress}>
       <Image source={{ uri: MEDIA_BASE_URL + imageUrl }} style={styles.image} />
       {rank ? (
         <View style={styles.rankContainer}>
