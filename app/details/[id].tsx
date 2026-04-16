@@ -1,9 +1,10 @@
 import { useHeaderHeight } from "@react-navigation/elements"
 import { useLocalSearchParams, useNavigation } from "expo-router"
 import React, { useEffect, useState } from "react"
-import { Image, ImageStyle, StyleProp, StyleSheet, View } from "react-native"
+import { ActivityIndicator, Image, ImageStyle, StyleProp, StyleSheet, View } from "react-native"
 import { Back } from "../../src/components/BackButton"
 import { ToggleIcon } from "../../src/components/ImageIcon"
+import { ListEmptyComponent } from "../../src/components/List/ListEmpty"
 import { getMainGenre, getReleaseYear } from "../../src/components/Movie/helpers"
 import MovieAttribute from "../../src/components/Movie/MovieAttribute"
 import { ThemedText } from "../../src/components/ThemedText"
@@ -35,11 +36,11 @@ const DetailsScreen = () => {
   }, [data?.title, saved, navigation])
 
   if (isLoading) {
-    return <ThemedText>Loading...</ThemedText>
+    return <ActivityIndicator size={"large"} style={{ paddingTop: paddingTop + 100 }} />
   }
 
   if (error || !data) {
-    return <ThemedText>Error: {error?.message}</ThemedText>
+    return <ListEmptyComponent />
   }
 
   return (

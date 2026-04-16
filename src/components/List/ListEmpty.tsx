@@ -3,16 +3,20 @@ import MagicBox from "../SVGr/MagicBox"
 import NoResults from "../SVGr/NoResults"
 import { ThemedText } from "../ThemedText"
 
-export const ListEmptyComponent = () => (
-  <View style={styles.container}>
+type ListEmptyProps = {
+  minHeight?: number
+}
+
+export const ListEmptyComponent: React.FC<ListEmptyProps> = ({ minHeight = 600 }) => (
+  <View style={[styles.container, { minHeight }]}>
     <NoResults style={styles.icon} />
     <ThemedText style={styles.title}>We Are Sorry, We Can{"\n"}Not Find The Movies :(</ThemedText>
     <ThemedText style={styles.subtitle}>Find you movie by Type title, categories, years,</ThemedText>
   </View>
 )
 
-export const WatchListEmptyComponent = () => (
-  <View style={styles.container}>
+export const WatchListEmptyComponent: React.FC<ListEmptyProps> = ({ minHeight = 600 }) => (
+  <View style={[styles.container, { minHeight }]}>
     <MagicBox style={styles.icon} />
     <ThemedText style={styles.title}>There Is No Movie Yet!</ThemedText>
     <ThemedText style={styles.subtitle}>Find your movie by Type title, categories, years, etc</ThemedText>

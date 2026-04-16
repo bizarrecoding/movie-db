@@ -1,6 +1,6 @@
 import { router } from "expo-router"
 import { useCallback, useState } from "react"
-import { FlatList, ListRenderItem, StyleSheet, useWindowDimensions } from "react-native"
+import { ActivityIndicator, FlatList, ListRenderItem, StyleSheet } from "react-native"
 import { Movie } from "../../api/types"
 import { useNowPlayingMovies } from "../../hooks/use-now-playing"
 import { usePopularMovies } from "../../hooks/use-popular-movies"
@@ -25,12 +25,9 @@ const PopularGallery = () => {
   const { data, isLoading, error } = usePopularMovies()
 
   if (isLoading) {
-    return <ThemedText>Loading...</ThemedText>
+    return <ActivityIndicator size={"large"} style={{ margin: 50 }} />
   }
-  if (error) {
-    return <ThemedText>Error loading movies.</ThemedText>
-  }
-  if (!data?.results?.length) return <ListEmptyComponent />
+  if (error || !data?.results?.length) return <ListEmptyComponent minHeight={100} />
   return <Gallery horizontal data={data?.results || []} />
 }
 
@@ -39,7 +36,6 @@ export const HomeFeed = () => {
   const { data: upcomingData, isLoading: upcomingLoading, error: upcomingError } = useUpcomingMovies()
   const { data: topRatedData, isLoading: topRatedLoading, error: topRatedError } = useTopRatedMovies()
 
-  const width = useWindowDimensions().width
   const [active, setActive] = useState<HomeFeedTabs>("now_playing")
 
   const renderHeader = useCallback(
@@ -83,10 +79,10 @@ export const HomeFeed = () => {
       }
       ListEmptyComponent={() => {
         if (isLoading || upcomingLoading || topRatedLoading) {
-          return <ThemedText>Loading...</ThemedText>
+          return <ActivityIndicator size={"large"} style={{ paddingTop: 100 }} />
         }
         if (error || upcomingError || topRatedError) {
-          return <ThemedText>Error loading movies.</ThemedText>
+          return <ListEmptyComponent minHeight={300} />
         }
         return <ListEmptyComponent />
       }}
