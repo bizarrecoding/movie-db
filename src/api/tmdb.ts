@@ -52,7 +52,7 @@ export const movieVideoQuery = async (id: number) => {
 }
 
 export const searchMovieQuery = async (text: string) => {
-  const { data } = await tmdbApi.get<Pagination<MovieDetails>>(`/search/movie/`,{
+  const { data } = await tmdbApi.get<Pagination<MovieDetails>>(`/search/movie`,{
     params: {
       query: text
     }

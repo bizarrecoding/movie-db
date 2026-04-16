@@ -23,7 +23,8 @@ export type MovieDetails = Movie & {
   adult: boolean
   budget: number
   genres: Genre[]
-  homepage: string 
+  homepage: string
+  runtime: number
 }
 
 export type Pagination<T = Movie> = {
