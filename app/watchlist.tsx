@@ -1,11 +1,16 @@
 import React from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { StyleSheet, View } from "react-native"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 const WatchListScreen = () => {
+  const { top } = useSafeAreaInsets()
   return (
-    <View style={styles.container}>
-      <Text>watchlist</Text>
-    </View>
+    <View
+      style={{
+        flex: 1,
+        paddingTop: top,
+      }}
+    ></View>
   )
 }
 

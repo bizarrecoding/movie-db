@@ -6,13 +6,13 @@
 import { DarkTheme, Theme } from "@react-navigation/native";
 import { Platform } from 'react-native';
 
-const tintColorLight = '##0296E5';
-const tintColorDark = '##0296E5';
+const tintColorLight = '#0296E5';
+const tintColorDark = '#0296E5';
 
 export const Colors = {
   light: {
     text: '#11181C',
-    background: '#fff',
+    background: '#242A32',
     tint: tintColorLight,
     icon: '#687076',
     tabIconDefault: '#687076',
