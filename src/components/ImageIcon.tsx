@@ -1,5 +1,5 @@
 import React from "react"
-import { Image, StyleProp, View, ViewStyle } from "react-native"
+import { Image, StyleProp, TouchableOpacity, View, ViewStyle } from "react-native"
 
 export type ImageIconName = "star" | "clock" | "calendar" | "ticket" | "popcorn" | "back"
 
@@ -19,10 +19,10 @@ const Icons: Record<ImageIconName, any> = {
   back: require("../../assets/images/arrow-left.png"),
 }
 
-const ImageIcon: React.FC<ImageIconProps> = ({ name, size = 24, style, tintColor }) => {
+const ImageIcon: React.FC<ImageIconProps> = ({ name, size = 24, style, tintColor = "#FFFFFF" }) => {
   return (
     <View style={[{ width: size, height: size }, style]}>
-      <Image source={Icons[name]} style={{ width: size, height: size }} tintColor={tintColor} />
+      <Image source={Icons[name]} style={{ width: size, height: size, resizeMode: "contain" }} tintColor={tintColor} />
     </View>
   )
 }
@@ -31,15 +31,16 @@ export default ImageIcon
 
 type ToggleIconProps = Omit<ImageIconProps, "name"> & {
   value: boolean
+  setValue: () => void
 }
 
-export const ToggleIcon: React.FC<ToggleIconProps> = ({ value, size = 24, style, tintColor }) => {
+export const ToggleIcon: React.FC<ToggleIconProps> = ({ value, setValue, size = 20, style, tintColor }) => {
   const toggleIcon = value
     ? require("../../assets/images/bookmark-on.png")
     : require("../../assets/images/bookmark-off.png")
   return (
-    <View style={[{ width: size, height: size }, style]}>
-      <Image source={toggleIcon} style={{ width: size, height: size }} tintColor={tintColor} />
-    </View>
+    <TouchableOpacity style={[{ width: size, height: size }, style]} onPress={setValue}>
+      <Image source={toggleIcon} style={{ width: size, height: size, resizeMode: "contain" }} tintColor={tintColor} />
+    </TouchableOpacity>
   )
 }

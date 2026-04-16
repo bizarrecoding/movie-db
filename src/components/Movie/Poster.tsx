@@ -10,16 +10,25 @@ type RankedImageProps = {
   width?: number
   onPress?: () => void
   style?: StyleProp<ViewStyle>
+  aspectRatio?: number
 }
 
 const MEDIA_BASE_URL = "https://media.themoviedb.org/t/p/w440_and_h660_face"
 
-const Poster: React.FC<RankedImageProps> = ({ id, imageUrl, width = 100, rank, onPress, style }) => {
+const Poster: React.FC<RankedImageProps> = ({
+  id,
+  imageUrl,
+  width = 100,
+  rank,
+  onPress,
+  style,
+  aspectRatio = 19 / 24,
+}) => {
   const color = useThemeColor({}, "background")
   const textShadowColor = useThemeColor({}, "tint")
   return (
-    <TouchableOpacity style={[styles.container, { width }, style]} onPress={onPress}>
-      <Image source={{ uri: MEDIA_BASE_URL + imageUrl }} style={styles.image} />
+    <TouchableOpacity style={[{ width, aspectRatio }, style]} onPress={onPress}>
+      <Image source={{ uri: MEDIA_BASE_URL + imageUrl }} style={[styles.image, { aspectRatio }]} />
       {rank ? (
         <View style={styles.rankContainer}>
           <ThemedText type="defaultSemiBold" style={[styles.rankText, { color, textShadowColor }]}>
@@ -32,12 +41,8 @@ const Poster: React.FC<RankedImageProps> = ({ id, imageUrl, width = 100, rank, o
 }
 
 const styles = StyleSheet.create({
-  container: {
-    aspectRatio: 2 / 3,
-  },
   image: {
     width: "100%",
-    aspectRatio: 2 / 3,
     borderRadius: 16,
   },
   rankContainer: {

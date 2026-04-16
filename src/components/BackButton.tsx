@@ -1,5 +1,5 @@
 import React from "react"
-import { TouchableNativeFeedback } from "react-native"
+import { TouchableOpacity } from "react-native"
 import ImageIcon from "./ImageIcon"
 
 type BackProps = {
@@ -7,11 +7,9 @@ type BackProps = {
 }
 
 export const Back: React.FC<BackProps> = ({ onPress }) => {
-  // const color = useThemeColor({}, `text`)
-  // <MaterialIcons name="arrow-back-ios" size={24} color={color} />
   return (
-    <TouchableNativeFeedback onPress={onPress}>
+    <TouchableOpacity onPress={onPress}>
       <ImageIcon name="back" size={24} style={{ marginHorizontal: 24 }} />
-    </TouchableNativeFeedback>
+    </TouchableOpacity>
   )
 }
