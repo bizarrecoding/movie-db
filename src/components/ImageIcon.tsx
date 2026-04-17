@@ -1,7 +1,7 @@
 import React from "react"
 import { Image, StyleProp, TouchableOpacity, View, ViewStyle } from "react-native"
 
-export type ImageIconName = "star" | "clock" | "calendar" | "ticket" | "popcorn" | "back"
+export type ImageIconName = "star" | "clock" | "calendar" | "ticket" | "back"
 
 type ImageIconProps = {
   name: ImageIconName
@@ -15,7 +15,6 @@ const Icons: Record<ImageIconName, any> = {
   clock: require("../../assets/images/Clock.png"),
   calendar: require("../../assets/images/CalendarBlank.png"),
   ticket: require("../../assets/images/Ticket.png"),
-  popcorn: require("../../assets/images/Popcorn.png"),
   back: require("../../assets/images/arrow-left.png"),
 }
 
