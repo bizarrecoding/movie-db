@@ -1,7 +1,7 @@
 import { useHeaderHeight } from "@react-navigation/elements"
 import { Image } from "expo-image"
 import { useLocalSearchParams, useNavigation } from "expo-router"
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import { ActivityIndicator, ImageStyle, StyleProp, StyleSheet, View } from "react-native"
 import { Back } from "../../src/components/BackButton"
 import { ToggleIcon } from "../../src/components/ImageIcon"
@@ -9,6 +9,7 @@ import { ListEmptyComponent } from "../../src/components/List/ListEmpty"
 import { getMainGenre, getReleaseYear } from "../../src/components/Movie/helpers"
 import MovieAttribute from "../../src/components/Movie/MovieAttribute"
 import { ThemedText } from "../../src/components/ThemedText"
+import { useBookmark } from "../../src/hooks/use-bookmark"
 import { useMovie } from "../../src/hooks/use-movie"
 import { useThemeColor } from "../../src/hooks/use-theme-color"
 
@@ -19,22 +20,18 @@ const DetailsScreen = () => {
   const attributesColor = useThemeColor({ light: "#92929D", dark: "#92929D" }, "border")
   const { id } = useLocalSearchParams() as { id: string }
   const { data, isLoading, error } = useMovie(Number(id))
-  const [saved, setSaved] = useState(false)
-
-  const onToggleSaved = () => {
-    setSaved((s) => !s)
-    //TODO: add to watchlist store
-  }
+  const { bookmarked, toggle } = useBookmark()
 
   useEffect(() => {
+    const toggleBookmark = () => toggle(data)
     navigation.setOptions({
       headerTitle: data?.title || "",
       headerLeft: () => <Back onPress={() => navigation.goBack()} />,
       headerRight: () => (
-        <ToggleIcon tintColor="#FFF" style={{ marginHorizontal: 24 }} value={saved} setValue={onToggleSaved} />
+        <ToggleIcon tintColor="#FFF" style={{ marginHorizontal: 24 }} value={bookmarked} setValue={toggleBookmark} />
       ),
     })
-  }, [data?.title, saved, navigation])
+  }, [data?.title, navigation, data, bookmarked, toggle])
 
   if (isLoading) {
     return <ActivityIndicator size={"large"} style={{ paddingTop: paddingTop + 100 }} />

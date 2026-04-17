@@ -42,7 +42,11 @@ export const upcomingMoviesQuery = async () => {
 }
 
 export const movieDetailsQuery = async (id: number) => {
-  const { data } = await tmdbApi.get<MovieDetails>(`/movie/${id}`);
+  const { data } = await tmdbApi.get<MovieDetails>(`/movie/${id}`,{
+    params:{
+      append_to_response:"video"
+    }
+  });
   return data;
 }
 

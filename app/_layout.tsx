@@ -4,12 +4,16 @@ import { Stack } from "expo-router"
 import { StatusBar } from "expo-status-bar"
 import "react-native-reanimated"
 
-import React from "react"
+import React, { useEffect } from "react"
 import tmdbClient from "../src/api/client"
 import { AppTheme } from "../src/constants/theme"
+import { initDB } from "../src/db/client"
 import { useThemeColor } from "../src/hooks/use-theme-color"
 
 export default function RootLayout() {
+  useEffect(() => {
+    initDB()
+  }, [])
   return (
     <ThemeProvider value={AppTheme}>
       <QueryClientProvider client={tmdbClient}>

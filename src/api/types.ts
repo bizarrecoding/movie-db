@@ -1,17 +1,27 @@
+// used for sql
+export type StoredMovie = {
+  id: number
+  title: string
+  poster_path: string 
+  backdrop_path: string 
+  popularity: number 
+  overview: string
+  release_date: string
+  vote_average: number 
+  genre: string
+  runtime: number
+  video: number
+}
+
 export type Movie = {
   id: number
   title: string
-  poster_path: string
-  //
-  backdrop_path: string
-  original_language: string
-  original_title: string
-  popularity: number
-  genre_ids: number[]
+  poster_path: string 
+  backdrop_path: string 
+  popularity: number 
   overview: string
   release_date: string
-  vote_average: number
-  vote_count: number
+  vote_average: number 
   video: boolean
 }
 export type Genre = {
@@ -20,10 +30,7 @@ export type Genre = {
 }
 
 export type MovieDetails = Movie & {
-  adult: boolean
-  budget: number
   genres: Genre[]
-  homepage: string
   runtime: number
 }
 

@@ -7,8 +7,14 @@ const DAY = HOUR * 24
 const tmdbClient = new QueryClient({
   defaultOptions: {
     queries: {
+      /**
+       *  setting a shot stale time and a long eviction time for query results 
+       *  this will be part of the data persist layer and also improve repeated
+       *  request responses if queryKeys have not changed
+       */
       staleTime: 5 * MINUTE, 
       gcTime: DAY,
+      networkMode: "offlineFirst",
       refetchOnWindowFocus: false,
       refetchOnReconnect:true,
     },

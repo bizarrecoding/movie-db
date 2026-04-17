@@ -40,6 +40,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ onSearch, defaultText, deboun
         onChangeText={setSearchText}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
+        onSubmitEditing={handleSubmit}
         autoCapitalize="none"
         autoCorrect={false}
       />

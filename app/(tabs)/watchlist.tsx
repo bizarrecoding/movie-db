@@ -1,17 +1,25 @@
 import { useHeaderHeight } from "@react-navigation/elements"
+import { useFocusEffect } from "expo-router"
 import React, { useCallback } from "react"
 import { FlatList, ListRenderItem, StyleSheet, View } from "react-native"
-import { Movie } from "../../src/api/types"
+import { MovieDetails } from "../../src/api/types"
 import { WatchListEmptyComponent } from "../../src/components/List/ListEmpty"
 import Card from "../../src/components/Movie/Card"
-import { usePopularMovies } from "../../src/hooks/use-popular-movies"
+import { useWatchlist } from "../../src/hooks/use-watchlist"
 
 const WatchListScreen = () => {
   const paddingTop = useHeaderHeight()
-  const { data, isLoading, error } = usePopularMovies()
-  const renderItem: ListRenderItem<Movie> = useCallback(({ item }) => {
+  const { data, isLoading, error, refetch } = useWatchlist()
+  const renderItem: ListRenderItem<MovieDetails> = useCallback(({ item }) => {
+    if (!item) return null
     return <Card item={item} />
   }, [])
+
+  useFocusEffect(
+    useCallback(() => {
+      refetch()
+    }, [refetch]),
+  )
 
   if (isLoading) {
     return <View style={[styles.container, { paddingTop }]} />
@@ -22,8 +30,8 @@ const WatchListScreen = () => {
   }
 
   return (
-    <FlatList<Movie>
-      data={data?.results || []}
+    <FlatList<MovieDetails>
+      data={data || []}
       renderItem={renderItem}
       keyExtractor={(item) => item.id.toString()}
       contentContainerStyle={{ paddingTop }}
