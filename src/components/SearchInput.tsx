@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 24,
     marginVertical: 18,
     elevation: 1,
-    shadowColor: "#000",
+    shadowColor: "#888",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
