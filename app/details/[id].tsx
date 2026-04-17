@@ -1,4 +1,3 @@
-import { useHeaderHeight } from "@react-navigation/elements"
 import { useLocalSearchParams, useNavigation } from "expo-router"
 import React, { useEffect } from "react"
 import { ActivityIndicator, StyleSheet, View } from "react-native"
@@ -12,11 +11,13 @@ import { ThemedText } from "../../src/components/ThemedText"
 import { useBookmark } from "../../src/hooks/use-bookmark"
 import { useMedia } from "../../src/hooks/use-media"
 import { useMovie } from "../../src/hooks/use-movie"
+import usePlatformHeaderHeight from "../../src/hooks/use-platform-header-height"
 import { useThemeColor } from "../../src/hooks/use-theme-color"
 
 const DetailsScreen = () => {
   const navigation = useNavigation()
-  const paddingTop = useHeaderHeight()
+  //normal useHeaderHeight is bugged in android
+  const paddingTop = usePlatformHeaderHeight()
   const ratingColor = useThemeColor({}, "icon")
   const attributesColor = useThemeColor({ light: "#92929D", dark: "#92929D" }, "border")
   const { id } = useLocalSearchParams() as { id: string }
@@ -36,7 +37,7 @@ const DetailsScreen = () => {
   }, [data?.title, navigation, data, bookmarked, toggle])
 
   if (isLoading) {
-    return <ActivityIndicator size={"large"} style={{ paddingTop: paddingTop + 100 }} />
+    return <ActivityIndicator size={"large"} style={{ paddingTop }} />
   }
 
   if (error || !data) {
