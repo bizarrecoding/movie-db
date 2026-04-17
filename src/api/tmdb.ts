@@ -28,17 +28,26 @@ export const popularMoviesQuery = async () => {
 
 export const nowPlayingMoviesQuery = async () => {
   const { data } = await tmdbApi.get<Pagination<Movie>>("/movie/now_playing");
-  return data;
+  return {
+    ...data,
+    results: data.results.slice(0,6)
+  };
 }
 
 export const topRatedMoviesQuery = async () => {
   const { data } = await tmdbApi.get<Pagination<Movie>>("/movie/top_rated");
-  return data;
+  return {
+    ...data,
+    results: data.results.slice(0,6)
+  };
 }
 
 export const upcomingMoviesQuery = async () => {
   const { data } = await tmdbApi.get<Pagination<Movie>>("/movie/upcoming");
-  return data;
+  return {
+    ...data,
+    results: data.results.slice(0,6)
+  };
 }
 
 export const movieDetailsQuery = async (id: number) => {
