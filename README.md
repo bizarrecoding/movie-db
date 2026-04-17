@@ -1,6 +1,10 @@
-# Welcome to your Expo app 👋
+# MovieDB
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A React Native app build with Expo that integrates TMDB API and is designed with an offline-first approach.
+
+<img src="./screenshots/home.png" width="200" height="410" />
+<img src="./screenshots/search.png" width="200" height="410" />
+<img src="./screenshots/details.png" width="200" height="410" />
 
 ## Get started
 
@@ -10,7 +14,14 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    npm install
    ```
 
-2. Start the app
+2. Make sure to provide you TMDB API in .env file
+
+   ```bash
+   EXPO_PUBLIC_API_URL=https://api.themoviedb.org/3
+   EXPO_PUBLIC_API_ACCESS=your_api_key
+   ```
+
+3. Start the app
 
    ```bash
    npx expo start
@@ -23,28 +34,43 @@ In the output, you'll find options to open the app in a
 - [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
 - [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Features
 
-## Get a fresh project
+- Advanced caching strategy
+  - SWR strategy
+  - query level TTL to reduce api calls
+  - persistent cache across restarts
 
-When you're ready, run:
+- Image optimization (memory+disk)
+  - low latency memory caching
+  - reliable when offline disk caching
 
-```bash
-npm run reset-project
-```
+- Network awareness
+  - Detects offline state
+  - pause queries on disconnect
+  - refetch on reconnect
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Tech Stack
 
-## Learn more
+| Library        | Purpose                                        |
+| -------------- | ---------------------------------------------- |
+| Expo 54        | Core platform library                          |
+| Expo-router    | Handles file based navigation                  |
+| Axios          | HTTP client handles API layer                  |
+| TanStack Query | Handles server state caching                   |
+| AsyncStorage   | Persist cached server state                    |
+| expo-image     | Handles cache for images (disk)                |
+| expo-sqlite    | Handles offline storage of watchlisted items   |
+| NetInfo        | Subscribes to network changes to show an alert |
 
-To learn more about developing your project with Expo, look at the following resources:
+## Improvements
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- Fully test different video request sites. Currently only YouTube is supported.(no other site was documented)
+- Local search fallback to cached content when offline
+  > can be done with useNetwork hook and deffer the query to local data instead of TMDB API when offline
+- Infinite scrolling with pagination
+  > Tanstack useInfiniteQuery can handle pagination coordination with a simple change
+- Use of react-native-mmkv to faster storage read/write
+  > can be easily done by implementing an adapter for setItem, getItem, removeItem and entries to use mmvk.
+- Implement full Auth client to allow more API features within TMDB
+  > instead of directly using an Api Access Token, first use API Key to request an access token

@@ -1,5 +1,5 @@
 import { router } from "expo-router"
-import { useCallback, useState } from "react"
+import { memo, useCallback, useState } from "react"
 import { ActivityIndicator, FlatList, ListRenderItem, StyleSheet } from "react-native"
 import { Movie } from "../../api/types"
 import { useNowPlayingMovies } from "../../hooks/use-now-playing"
@@ -31,6 +31,15 @@ const PopularGallery = () => {
   return <Gallery horizontal data={data?.results || []} />
 }
 
+const ListHeader = memo(() => (
+  <>
+    <ThemedText style={styles.header}>What do you want to watch?</ThemedText>
+    <SearchInput />
+    <PopularGallery />
+  </>
+))
+ListHeader.displayName = "ListHeader"
+
 export const HomeFeed = () => {
   const { data, isLoading, error } = useNowPlayingMovies()
   const { data: upcomingData, isLoading: upcomingLoading, error: upcomingError } = useUpcomingMovies()
@@ -38,16 +47,6 @@ export const HomeFeed = () => {
 
   const [active, setActive] = useState<HomeFeedTabs>("now_playing")
 
-  const renderHeader = useCallback(
-    () => (
-      <>
-        <ThemedText style={styles.header}>What do you want to watch?</ThemedText>
-        <SearchInput />
-        <PopularGallery />
-      </>
-    ),
-    [],
-  )
   const renderItem: ListRenderItem<Movie> = useCallback(({ item }) => {
     const goToDetails = () => router.push(`/details/${item.id}`)
     return (
@@ -73,11 +72,13 @@ export const HomeFeed = () => {
       data={moviesByCategory[active] || []}
       ListHeaderComponent={
         <>
-          {renderHeader()}
+          <ListHeader />
           <SlidingTabs<HomeFeedTabs> tabs={Tabs} activeTab={active} onTabChange={setActive} />
         </>
       }
       ListEmptyComponent={() => {
+        // Network state handled here so that even with a loading/error
+        // state, the app still renders the list header
         if (isLoading || upcomingLoading || topRatedLoading) {
           return <ActivityIndicator size={"large"} style={{ paddingTop: 100 }} />
         }
