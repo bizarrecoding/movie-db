@@ -1,15 +1,16 @@
 import { useHeaderHeight } from "@react-navigation/elements"
-import { Image } from "expo-image"
 import { useLocalSearchParams, useNavigation } from "expo-router"
 import React, { useEffect } from "react"
-import { ActivityIndicator, ImageStyle, StyleProp, StyleSheet, View } from "react-native"
+import { ActivityIndicator, StyleSheet, View } from "react-native"
 import { Back } from "../../src/components/BackButton"
 import { ToggleIcon } from "../../src/components/ImageIcon"
 import { ListEmptyComponent } from "../../src/components/List/ListEmpty"
 import { getMainGenre, getReleaseYear } from "../../src/components/Movie/helpers"
 import MovieAttribute from "../../src/components/Movie/MovieAttribute"
+import { MovieImage } from "../../src/components/Movie/MovieMedia"
 import { ThemedText } from "../../src/components/ThemedText"
 import { useBookmark } from "../../src/hooks/use-bookmark"
+import { useMedia } from "../../src/hooks/use-media"
 import { useMovie } from "../../src/hooks/use-movie"
 import { useThemeColor } from "../../src/hooks/use-theme-color"
 
@@ -20,6 +21,7 @@ const DetailsScreen = () => {
   const attributesColor = useThemeColor({ light: "#92929D", dark: "#92929D" }, "border")
   const { id } = useLocalSearchParams() as { id: string }
   const { data, isLoading, error } = useMovie(Number(id))
+  const { data: mediaRes, isLoading: mediaLoading } = useMedia(Number(id))
   const { bookmarked, toggle } = useBookmark()
 
   useEffect(() => {
@@ -43,7 +45,7 @@ const DetailsScreen = () => {
 
   return (
     <View style={[styles.container, { paddingTop }]}>
-      <MovieImage imageUrl={data?.backdrop_path || ""} style={styles.backdrop} />
+      <MovieImage imageUrl={data?.backdrop_path || ""} style={styles.backdrop} link={mediaRes?.results?.at(0)} />
       <View style={styles.HeaderWrapper}>
         <MovieImage imageUrl={data?.poster_path || ""} style={styles.poster} />
         <View style={styles.infoOverlay}>
@@ -72,22 +74,6 @@ const DetailsScreen = () => {
 }
 
 export default DetailsScreen
-
-type MovieImageProps = {
-  imageUrl: string
-  style?: StyleProp<ImageStyle>
-}
-
-const MovieImage: React.FC<MovieImageProps> = ({ imageUrl, style }) => {
-  return (
-    <Image
-      cachePolicy="memory-disk"
-      source={`https://media.themoviedb.org/t/p/w440_and_h660_face${imageUrl}`}
-      style={style}
-      contentFit="cover"
-    />
-  )
-}
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
