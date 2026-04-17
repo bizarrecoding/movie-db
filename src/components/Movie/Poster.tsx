@@ -14,7 +14,7 @@ type RankedImageProps = {
   aspectRatio?: number
 }
 
-const MEDIA_BASE_URL = "https://media.themoviedb.org/t/p/w440_and_h660_face"
+const MEDIA_BASE_URL = "https://media.themoviedb.org/t/p/w200"
 
 const Poster: React.FC<RankedImageProps> = ({
   id,
