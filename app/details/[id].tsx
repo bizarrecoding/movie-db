@@ -9,7 +9,6 @@ import MovieAttribute from "../../src/components/Movie/MovieAttribute"
 import { MovieImage } from "../../src/components/Movie/MovieMedia"
 import { ThemedText } from "../../src/components/ThemedText"
 import { useBookmark } from "../../src/hooks/use-bookmark"
-import { useMedia } from "../../src/hooks/use-media"
 import { useMovie } from "../../src/hooks/use-movie"
 import usePlatformHeaderHeight from "../../src/hooks/use-platform-header-height"
 import { useThemeColor } from "../../src/hooks/use-theme-color"
@@ -22,7 +21,6 @@ const DetailsScreen = () => {
   const attributesColor = useThemeColor({ light: "#92929D", dark: "#92929D" }, "border")
   const { id } = useLocalSearchParams() as { id: string }
   const { data, isLoading, error } = useMovie(Number(id))
-  const { data: mediaRes } = useMedia(Number(id))
   const { bookmarked, toggle } = useBookmark()
 
   useEffect(() => {
@@ -44,9 +42,10 @@ const DetailsScreen = () => {
     return <ListEmptyComponent />
   }
 
+  const media_link = data?.videos?.results?.at(0)
   return (
     <View style={[styles.container, { paddingTop }]}>
-      <MovieImage imageUrl={data?.backdrop_path || ""} style={styles.backdrop} link={mediaRes?.results?.at(0)} />
+      <MovieImage imageUrl={data?.backdrop_path || ""} style={styles.backdrop} link={media_link} />
       <View style={styles.HeaderWrapper}>
         <MovieImage imageUrl={data?.poster_path || ""} style={styles.poster} />
         <View style={styles.infoOverlay}>

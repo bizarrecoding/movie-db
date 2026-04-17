@@ -32,6 +32,9 @@ export type Genre = {
 export type MovieDetails = Movie & {
   genres: Genre[]
   runtime: number
+  videos?: {
+    results: MovieVideo[]
+  }
 }
 
 export type Pagination<T = Movie> = {
