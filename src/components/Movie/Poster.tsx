@@ -1,5 +1,6 @@
+import { Image } from "expo-image"
 import React from "react"
-import { Image, StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native"
+import { StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native"
 import { useThemeColor } from "../../hooks/use-theme-color"
 import { ThemedText } from "../ThemedText"
 
@@ -28,7 +29,11 @@ const Poster: React.FC<RankedImageProps> = ({
   const textShadowColor = useThemeColor({}, "tint")
   return (
     <TouchableOpacity style={[{ width, aspectRatio }, style]} onPress={onPress}>
-      <Image source={{ uri: MEDIA_BASE_URL + imageUrl }} style={[styles.image, { aspectRatio }]} />
+      <Image
+        source={`${MEDIA_BASE_URL}${imageUrl}`}
+        style={[styles.image, { aspectRatio }]}
+        cachePolicy="memory-disk"
+      />
       {rank ? (
         <View style={styles.rankContainer}>
           <ThemedText type="defaultSemiBold" style={[styles.rankText, { color, textShadowColor }]}>

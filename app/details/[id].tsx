@@ -1,7 +1,8 @@
 import { useHeaderHeight } from "@react-navigation/elements"
+import { Image } from "expo-image"
 import { useLocalSearchParams, useNavigation } from "expo-router"
 import React, { useEffect, useState } from "react"
-import { ActivityIndicator, Image, ImageStyle, StyleProp, StyleSheet, View } from "react-native"
+import { ActivityIndicator, ImageStyle, StyleProp, StyleSheet, View } from "react-native"
 import { Back } from "../../src/components/BackButton"
 import { ToggleIcon } from "../../src/components/ImageIcon"
 import { ListEmptyComponent } from "../../src/components/List/ListEmpty"
@@ -81,7 +82,14 @@ type MovieImageProps = {
 }
 
 const MovieImage: React.FC<MovieImageProps> = ({ imageUrl, style }) => {
-  return <Image source={{ uri: `https://media.themoviedb.org/t/p/w440_and_h660_face${imageUrl}` }} style={style} />
+  return (
+    <Image
+      cachePolicy="memory-disk"
+      source={`https://media.themoviedb.org/t/p/w440_and_h660_face${imageUrl}`}
+      style={style}
+      contentFit="cover"
+    />
+  )
 }
 
 const styles = StyleSheet.create({
@@ -90,7 +98,6 @@ const styles = StyleSheet.create({
   HeaderWrapper: { flexDirection: "row", paddingVertical: 12, paddingHorizontal: 24, gap: 12, marginTop: -70 },
   infoOverlay: { flex: 1, flexDirection: "column-reverse", justifyContent: "space-between" },
   backdrop: {
-    resizeMode: "cover",
     width: "100%",
     aspectRatio: 5 / 3,
     borderRadius: 16,
