@@ -1,11 +1,11 @@
 import { ThemeProvider } from "@react-navigation/native"
-import { QueryClientProvider } from "@tanstack/react-query"
 import { Stack } from "expo-router"
 import { StatusBar } from "expo-status-bar"
 import "react-native-reanimated"
 
+import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client"
 import React, { useEffect } from "react"
-import tmdbClient from "../src/api/client"
+import tmdbClient, { persistOptions } from "../src/api/client"
 import { NetworkAlert } from "../src/components/NetworkAlert"
 import { AppTheme } from "../src/constants/theme"
 import { initDB } from "../src/db/client"
@@ -19,9 +19,9 @@ export default function RootLayout() {
   }, [])
   return (
     <ThemeProvider value={AppTheme}>
-      <QueryClientProvider client={tmdbClient}>
+      <PersistQueryClientProvider client={tmdbClient} persistOptions={persistOptions}>
         <NavLayout />
-      </QueryClientProvider>
+      </PersistQueryClientProvider>
       <StatusBar style="light" />
       <NetworkAlert available={networkAvailable} />
     </ThemeProvider>

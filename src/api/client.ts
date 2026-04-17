@@ -1,4 +1,7 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister';
 import { QueryClient } from "@tanstack/react-query";
+
 
 const MINUTE = 1000 * 60
 const HOUR = MINUTE * 60
@@ -22,3 +25,11 @@ const tmdbClient = new QueryClient({
 })
 
 export default tmdbClient
+
+const asyncStoragePersister = createAsyncStoragePersister({
+  storage: AsyncStorage,
+})
+
+export const persistOptions = {
+  persister: asyncStoragePersister
+}

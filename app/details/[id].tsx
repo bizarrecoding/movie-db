@@ -21,7 +21,7 @@ const DetailsScreen = () => {
   const attributesColor = useThemeColor({ light: "#92929D", dark: "#92929D" }, "border")
   const { id } = useLocalSearchParams() as { id: string }
   const { data, isLoading, error } = useMovie(Number(id))
-  const { data: mediaRes, isLoading: mediaLoading } = useMedia(Number(id))
+  const { data: mediaRes } = useMedia(Number(id))
   const { bookmarked, toggle } = useBookmark()
 
   useEffect(() => {
